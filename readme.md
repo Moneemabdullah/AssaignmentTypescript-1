@@ -1,50 +1,58 @@
+# Assignment: TypeScript – 1
 
 
-3. any, unknown, এবং never এর পার্থক্য
-✔ any
+## any, unknown, এবং never টাইপের পার্থক্য
 
-সব ধরনের ভ্যালু গ্রহণ করে।
+### any
+- যেকোনো ধরনের ভ্যালু গ্রহণ করে।
+- টাইপ চেকিং প্রায় সম্পূর্ণ বন্ধ হয়ে যায় — তাই অনেক ঝুঁকিপূর্ণ।
+- ভুল করলে TypeScript error দেখাবে না (runtime এ error দিতে পারে)।
 
-টাইপ চেকিং বন্ধ হয়ে যায় (dangerous).
-
-ভুল হলে TypeScript detect করতে পারে না।
-
+**Example:**
+```ts
 let a: any = 10;
 a = "hello"; // OK
-a.run();     // runtime error হবে, TS ধরতে পারবে না
+a.run();     // Runtime error (TS cannot detect)
+```
 
-✔ unknown
+### unknown
+- any এর মতো যেকোনো ভ্যালু রাখা যায়।
+- তবে সরাসরি ব্যবহার করা যায় না — আগে টাইপ চেক করতে হয়।
+- তাই এটি any এর তুলনায় অনেক নিরাপদ।
 
-any এর মতো সবকিছু গ্রহণ করে।
+**Example:**
 
-কিন্তু ব্যবহারের আগে TypeScript আপনাকে টাইপ চেক করতে বাধ্য করবে।
-
-much safer than any.
-
+```ts
 let b: unknown = "hello";
-// b.toUpperCase(); ❌ Error (type check ছাড়া ব্যবহার করা যাবে না)
+// b.toUpperCase(); Error (needs type checking)
 
 if (typeof b === "string") {
-  b.toUpperCase(); // ✔ now safe
+  b.toUpperCase(); // ✔ Safe
 }
+```
+### never
+- এমন টাইপ, যা কখনোই রিটার্ন হয় না।
+- সাধারণত error throw করা বা infinite loop এর ক্ষেত্রে ব্যবহার হয়।
 
-✔ never
+**Example:**
 
-এমন টাইপ যেটি কখনো ঘটবে না।
-
-সাধারণত error throw করা বা infinite loop এর ক্ষেত্রে ব্যবহার হয়।
-
+```ts
 function generateError(message: string): never {
   throw new Error(message);
 }
+```
 
 
-4. Enums এর ব্যবহার (numeric & string enum)
 
-TypeScript-এ enum ব্যবহার করা হয় fixed set of values সংরক্ষণ করতে। যেমন – status, roles, directions ইত্যাদি।
+## Enums এর ব্যবহার (Numeric & String Enum)
+TypeScript-এ enum ব্যবহার করা হয় ফিক্সড ভ্যালুগুলোর একটি সেট সংরক্ষণ করতে — যেমন status, user roles, direction ইত্যাদি।
 
+### Numeric Enum
+- ভ্যালুগুলো অটোমেটিকভাবে ০, ১, ২… দিয়ে শুরু হয়।
 
-✔ Numeric Enum
+**Example:**
+
+```ts
 enum Status {
   PENDING,     // 0
   APPROVED,    // 1
@@ -52,14 +60,20 @@ enum Status {
 }
 
 let s: Status = Status.APPROVED;
+```
+###String Enum
+- প্রতিটি enum মান manual string হিসেবে সেট করা থাকে।
 
 
+**Example:**
 
-✔ String Enum
+```ts
 enum Roles {
   ADMIN = "admin",
   USER = "user",
   GUEST = "guest"
 }
 
-let r: Roles = Roles.ADMIN;# AssaignmentTypwscript-1
+let r: Roles = Roles.ADMIN;
+```
+---
